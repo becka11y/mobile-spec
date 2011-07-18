@@ -13,6 +13,7 @@ Tests.prototype.StorageTests = function()
   });
   test("check length", function() {
     expect(3);
+    window.sessionStorage.clear();
     ok(window.sessionStorage.length == 0, "length should be 0");
     window.sessionStorage.setItem("key","value");
     ok(window.sessionStorage.length == 1, "length should be 1");
@@ -21,6 +22,7 @@ Tests.prototype.StorageTests = function()
   });
   test("check key", function() {
 	expect(3);
+    window.sessionStorage.clear();
 	ok(window.sessionStorage.key(0) == null, "key should be null");
 	window.sessionStorage.setItem("test","value");
 	ok(window.sessionStorage.key(0) == "test", "key should be 'test'");
@@ -55,6 +57,7 @@ Tests.prototype.StorageTests = function()
   });
   test("check clear", function() {
     expect(11);
+    window.sessionStorage.clear();
     ok(window.sessionStorage.getItem("item1") == null, "item1 should be null");
     ok(window.sessionStorage.getItem("item2") == null, "item2 should be null");
     ok(window.sessionStorage.getItem("item3") == null, "item3 should be null");
@@ -63,7 +66,7 @@ Tests.prototype.StorageTests = function()
     window.sessionStorage.setItem("item3","value");
     ok(window.sessionStorage.getItem("item1") == "value", "item1 should be null");
     ok(window.sessionStorage.getItem("item2") == "value", "item2 should be null");
-    ok(window.sessionStorage.getItem("item3") == "value", "item3 should be null");	    
+    ok(window.sessionStorage.getItem("item3") == "value", "item3 should be null");	
     ok(window.sessionStorage.length == 3, "length should be 3");
     window.sessionStorage.clear();
     ok(window.sessionStorage.length == 0, "length should be 0");
