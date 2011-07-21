@@ -185,11 +185,7 @@
         navigator.notification.beep(1);
 
         // Record audio
-        if (mediaRec.startAudioRecord){
-            mediaRec.startAudioRecord();
-        } else {
-            mediaRec.startRecord();
-        }
+        mediaRec.startRecord();
 
         // Stop recording after 10 sec
         recTime = 0;
@@ -217,13 +213,31 @@
     }
     
     /**
+     * Function to create a file for iOS recording
+     */
+    function getRecordSrc() {
+        var fsFail = function(error) {
+            console.log("error creating file for iOS recording");
+        };
+        var gotFile = function(file) {
+            recordSrc = file.fullPath;
+            //console.log("recording Src: " + recordSrc);
+        };
+        var gotFS = function(fileSystem) {
+            fileSystem.root.getFile("iOSRecording.wav", {create: true}, gotFile, fsFail);
+        };
+        window.requestFileSystem(LocalFileSystem.TEMPORARY, 0, gotFS, fsFail);
+    }
+    
+    /**
      * Function called when page has finished loading.
      */
     function init() {
         document.addEventListener("deviceready", function() {
                 deviceReady = true;
-                if (device.platform.indexOf("iPhone") !=-1) {
-                     recordSrc = "myRecording.wav";
+                if (device.platform.indexOf("iPhone") !=-1 || device.platform.indexOf("iPad") !=-1)
+                {
+                     getRecordSrc();
                 }
                 console.log("Device="+device.platform+" "+device.version);
             }, false);
